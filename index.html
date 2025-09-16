@@ -255,6 +255,35 @@
             margin-bottom: 12px;
         }
         
+        .instructions {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .instructions h3 {
+            color: #58a6ff;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .instructions code {
+            background-color: #0d1117;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -382,6 +411,17 @@
                     <i class="fas fa-plus-circle"></i>
                     <span>Create new form</span>
                 </div>
+            </div>
+
+            <div class="instructions">
+                <h3>Installation Instructions</h3>
+                <ol>
+                    <li>Create a new repository on GitHub with a README file</li>
+                    <li>Upload this HTML file as <code>index.html</code> to your repository</li>
+                    <li>Go to Settings → Pages → Select "Deploy from branch" → Choose "main" branch</li>
+                    <li>Your dashboard will be available at: <code>https://[username].github.io/[repository-name]</code></li>
+                </ol>
+                <p><strong>Note:</strong> It may take a few minutes for your site to be published after enabling GitHub Pages.</p>
             </div>
         </main>
     </div>
