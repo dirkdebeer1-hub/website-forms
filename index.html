@@ -383,11 +383,11 @@
                     </div>
                 </div>
                 
-                <div class="form-card">
-                    <h3>Contact Form</h3>
-                    <p>General purpose contact form with email notifications.</p>
+                <div class="form-card" data-form-url="contact-us.html">
+                    <h3>Contact Us Form</h3>
+                    <p>Complete contact form with validation for name, email, subject, and message.</p>
                     <div class="form-meta">
-                        <span>Updated 2 weeks ago</span>
+                        <span>Updated just now</span>
                         <span class="form-status">
                             <span class="status-dot status-public"></span>
                             Public
@@ -407,9 +407,9 @@
                     </div>
                 </div>
                 
-                <div class="form-card new-form-card">
+                <div class="form-card new-form-card" data-form-url="contact-us.html">
                     <i class="fas fa-plus-circle"></i>
-                    <span>Create new form</span>
+                    <span>Try Contact Us Form</span>
                 </div>
             </div>
 
@@ -433,7 +433,12 @@
             
             formCards.forEach(card => {
                 card.addEventListener('click', function() {
-                    if (this.classList.contains('new-form-card')) {
+                    const formUrl = this.getAttribute('data-form-url');
+                    
+                    if (formUrl) {
+                        // Navigate to the specific form
+                        window.location.href = formUrl;
+                    } else if (this.classList.contains('new-form-card')) {
                         alert('Create new form functionality would open here.');
                     } else {
                         const formName = this.querySelector('h3').textContent;
