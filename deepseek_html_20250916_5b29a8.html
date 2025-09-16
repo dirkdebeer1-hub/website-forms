@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Forms Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.5;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #161b22;
+            padding: 16px 32px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f0f6fc;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .nav-links a {
+            color: #c9d1d9;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #f0f6fc;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 24px;
+        }
+        
+        .sidebar {
+            width: 280px;
+            padding: 24px;
+            border-right: 1px solid #30363d;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #f0f6fc;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px 12px;
+            padding-left: 36px;
+            color: #c9d1d9;
+            font-size: 14px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            color: #6e7681;
+        }
+        
+        .repo-list {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+        
+        .repo-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #21262d;
+        }
+        
+        .repo-item input[type="checkbox"] {
+            margin-right: 12px;
+            accent-color: #238636;
+        }
+        
+        .repo-item label {
+            font-size: 14px;
+            color: #c9d1d9;
+            cursor: pointer;
+        }
+        
+        .repo-item.completed label {
+            color: #7d8590;
+            text-decoration: line-through;
+        }
+        
+        .btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #2ea043;
+        }
+        
+        .btn i {
+            font-size: 14px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .dashboard-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #f0f6fc;
+        }
+        
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .form-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        
+        .form-card:hover {
+            border-color: #58a6ff;
+            transform: translateY(-2px);
+        }
+        
+        .form-card h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #58a6ff;
+        }
+        
+        .form-card p {
+            font-size: 14px;
+            color: #7d8590;
+            margin-bottom: 16px;
+        }
+        
+        .form-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #7d8590;
+        }
+        
+        .form-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-public {
+            background-color: #238636;
+        }
+        
+        .status-private {
+            background-color: #da3633;
+        }
+        
+        .new-form-card {
+            background-color: transparent;
+            border: 2px dashed #30363d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .new-form-card:hover {
+            border-color: #58a6ff;
+            color: #58a6ff;
+        }
+        
+        .new-form-card i {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #30363d;
+            }
+            
+            .forms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg height="32" viewBox="0 0 16 16" width="32" fill="white">
+                <path d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"/>
+            </svg>
+            <h1>GitHub Forms Dashboard</h1>
+        </div>
+        <div class="nav-links">
+            <a href="#">Overview</a>
+            <a href="#">Repositories</a>
+            <a href="#">Projects</a>
+            <a href="#">Forms</a>
+            <a href="#">Settings</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3 class="section-title">Top repositories</h3>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Find a repository...">
+            </div>
+            
+            <ul class="repo-list">
+                <li class="repo-item">
+                    <input type="checkbox" id="repo1">
+                    <label for="repo1">dirkdebeer1-hub/registration-forms</label>
+                </li>
+                <li class="repo-item completed">
+                    <input type="checkbox" id="repo2" checked>
+                    <label for="repo2">dirkdebeer1-hub/private-company-registration</label>
+                </li>
+                <li class="repo-item">
+                    <input type="checkbox" id="repo3">
+                    <label for="repo3">dirkdebeer1-hub/contact-form</label>
+                </li>
+                <li class="repo-item">
+                    <input type="checkbox" id="repo4">
+                    <label for="repo4">dirkdebeer1-hub/feedback-form</label>
+                </li>
+            </ul>
+            
+            <button class="btn">
+                <i class="fas fa-plus"></i> New
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h2>Form Management</h2>
+                <button class="btn">
+                    <i class="fas fa-plus"></i> New Form
+                </button>
+            </div>
+            
+            <div class="forms-grid">
+                <div class="form-card">
+                    <h3>Registration Forms</h3>
+                    <p>User registration and account creation forms with validation.</p>
+                    <div class="form-meta">
+                        <span>Updated 3 days ago</span>
+                        <span class="form-status">
+                            <span class="status-dot status-public"></span>
+                            Public
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-card">
+                    <h3>Private Company Registration</h3>
+                    <p>Forms for registering new businesses and corporate entities.</p>
+                    <div class="form-meta">
+                        <span>Updated 1 day ago</span>
+                        <span class="form-status">
+                            <span class="status-dot status-private"></span>
+                            Private
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-card">
+                    <h3>Contact Form</h3>
+                    <p>General purpose contact form with email notifications.</p>
+                    <div class="form-meta">
+                        <span>Updated 2 weeks ago</span>
+                        <span class="form-status">
+                            <span class="status-dot status-public"></span>
+                            Public
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-card">
+                    <h3>Feedback Form</h3>
+                    <p>Collect user feedback and ratings for your services.</p>
+                    <div class="form-meta">
+                        <span>Updated 5 days ago</span>
+                        <span class="form-status">
+                            <span class="status-dot status-private"></span>
+                            Private
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-card new-form-card">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Create new form</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add interactivity to form cards
+            const formCards = document.querySelectorAll('.form-card');
+            
+            formCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    if (this.classList.contains('new-form-card')) {
+                        alert('Create new form functionality would open here.');
+                    } else {
+                        const formName = this.querySelector('h3').textContent;
+                        alert(`Opening form: ${formName}`);
+                    }
+                });
+            });
+            
+            // Toggle repository completion status
+            const repoCheckboxes = document.querySelectorAll('.repo-item input');
+            
+            repoCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const listItem = this.parentElement;
+                    if (this.checked) {
+                        listItem.classList.add('completed');
+                    } else {
+                        listItem.classList.remove('completed');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
