@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - GitHub Forms Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: #161b22;
+            padding: 16px 32px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f0f6fc;
+        }
+        
+        .back-link {
+            color: #58a6ff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .form-header h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 16px;
+        }
+        
+        .form-header p {
+            font-size: 16px;
+            color: #7d8590;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-form {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+        
+        .required {
+            color: #f85149;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 12px 16px;
+            color: #c9d1d9;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .error {
+            border-color: #f85149 !important;
+            box-shadow: 0 0 0 3px rgba(248, 81, 73, 0.1) !important;
+        }
+        
+        .error-message {
+            color: #f85149;
+            font-size: 12px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .error-message i {
+            font-size: 10px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        
+        .btn:hover {
+            background-color: #2ea043;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn:disabled {
+            background-color: #21262d;
+            color: #6e7681;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background-color: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #30363d;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 32px;
+        }
+        
+        .success-message {
+            background-color: #0f2419;
+            border: 1px solid #2ea043;
+            border-radius: 6px;
+            padding: 16px;
+            color: #2ea043;
+            margin-bottom: 24px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .success-message.show {
+            display: flex;
+        }
+        
+        .character-count {
+            font-size: 12px;
+            color: #7d8590;
+            text-align: right;
+            margin-top: 4px;
+        }
+        
+        .character-count.warning {
+            color: #d29922;
+        }
+        
+        .character-count.error {
+            color: #f85149;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg height="32" viewBox="0 0 16 16" width="32" fill="white">
+                <path d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"/>
+            </svg>
+            <h1>Contact Us</h1>
+        </div>
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="form-header">
+            <h2>Get in Touch</h2>
+            <p>Have a question, suggestion, or need help with our forms? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate>
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span>Thank you for your message! We'll get back to you soon.</span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name <span class="required">*</span></label>
+                    <input type="text" id="firstName" name="firstName" required>
+                    <div class="error-message" id="firstNameError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name <span class="required">*</span></label>
+                    <input type="text" id="lastName" name="lastName" required>
+                    <div class="error-message" id="lastNameError"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject <span class="required">*</span></label>
+                <select id="subject" name="subject" required>
+                    <option value="">Select a subject...</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="feature">Feature Request</option>
+                    <option value="bug">Bug Report</option>
+                    <option value="business">Business Inquiry</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error-message" id="subjectError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message <span class="required">*</span></label>
+                <textarea id="message" name="message" placeholder="Please describe your inquiry in detail..." required maxlength="1000"></textarea>
+                <div class="character-count" id="characterCount">0 / 1000 characters</div>
+                <div class="error-message" id="messageError"></div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-undo"></i> Reset Form
+                </button>
+                <button type="submit" class="btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const successMessage = document.getElementById('successMessage');
+            const messageField = document.getElementById('message');
+            const characterCount = document.getElementById('characterCount');
+
+            // Form validation rules
+            const validators = {
+                firstName: {
+                    required: true,
+                    minLength: 2,
+                    pattern: /^[a-zA-Z\s-']+$/,
+                    message: 'First name must be at least 2 characters and contain only letters, spaces, hyphens, or apostrophes.'
+                },
+                lastName: {
+                    required: true,
+                    minLength: 2,
+                    pattern: /^[a-zA-Z\s-']+$/,
+                    message: 'Last name must be at least 2 characters and contain only letters, spaces, hyphens, or apostrophes.'
+                },
+                email: {
+                    required: true,
+                    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Please enter a valid email address.'
+                },
+                subject: {
+                    required: true,
+                    message: 'Please select a subject for your inquiry.'
+                },
+                message: {
+                    required: true,
+                    minLength: 10,
+                    maxLength: 1000,
+                    message: 'Message must be between 10 and 1000 characters.'
+                }
+            };
+
+            // Update character count
+            function updateCharacterCount() {
+                const count = messageField.value.length;
+                const maxCount = 1000;
+                characterCount.textContent = `${count} / ${maxCount} characters`;
+                
+                characterCount.className = 'character-count';
+                if (count > maxCount * 0.9) {
+                    characterCount.classList.add('warning');
+                }
+                if (count > maxCount) {
+                    characterCount.classList.add('error');
+                }
+            }
+
+            // Validate individual field
+            function validateField(fieldName, value) {
+                const validator = validators[fieldName];
+                const errors = [];
+
+                if (validator.required && !value.trim()) {
+                    errors.push('This field is required.');
+                } else if (value.trim()) {
+                    if (validator.minLength && value.length < validator.minLength) {
+                        errors.push(`Minimum ${validator.minLength} characters required.`);
+                    }
+                    if (validator.maxLength && value.length > validator.maxLength) {
+                        errors.push(`Maximum ${validator.maxLength} characters allowed.`);
+                    }
+                    if (validator.pattern && !validator.pattern.test(value)) {
+                        errors.push(validator.message);
+                    }
+                }
+
+                return errors;
+            }
+
+            // Display field error
+            function displayFieldError(fieldName, errors) {
+                const field = document.getElementById(fieldName);
+                const errorElement = document.getElementById(fieldName + 'Error');
+
+                if (errors.length > 0) {
+                    field.classList.add('error');
+                    errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${errors[0]}`;
+                } else {
+                    field.classList.remove('error');
+                    errorElement.innerHTML = '';
+                }
+            }
+
+            // Validate entire form
+            function validateForm() {
+                let isValid = true;
+                const formData = new FormData(form);
+
+                for (const [fieldName, validator] of Object.entries(validators)) {
+                    const value = formData.get(fieldName) || '';
+                    const errors = validateField(fieldName, value);
+                    displayFieldError(fieldName, errors);
+                    
+                    if (errors.length > 0) {
+                        isValid = false;
+                    }
+                }
+
+                return isValid;
+            }
+
+            // Add real-time validation
+            form.addEventListener('input', function(e) {
+                if (e.target.matches('input, textarea, select')) {
+                    const fieldName = e.target.name;
+                    const value = e.target.value;
+                    const errors = validateField(fieldName, value);
+                    displayFieldError(fieldName, errors);
+                }
+            });
+
+            // Update character count on input
+            messageField.addEventListener('input', updateCharacterCount);
+            updateCharacterCount(); // Initial call
+
+            // Handle form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    // Simulate form submission
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+                    setTimeout(() => {
+                        successMessage.classList.add('show');
+                        form.reset();
+                        updateCharacterCount();
+                        
+                        // Clear any existing error states
+                        form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+                        form.querySelectorAll('.error-message').forEach(el => el.innerHTML = '');
+                        
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+
+                        // Hide success message after 5 seconds
+                        setTimeout(() => {
+                            successMessage.classList.remove('show');
+                        }, 5000);
+                    }, 2000);
+                } else {
+                    // Focus on first error field
+                    const firstError = form.querySelector('.error');
+                    if (firstError) {
+                        firstError.focus();
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+
+            // Handle form reset
+            resetBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset the form? All entered data will be lost.')) {
+                    form.reset();
+                    updateCharacterCount();
+                    successMessage.classList.remove('show');
+                    
+                    // Clear any existing error states
+                    form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+                    form.querySelectorAll('.error-message').forEach(el => el.innerHTML = '');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
