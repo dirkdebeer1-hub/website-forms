@@ -1,0 +1,3 @@
+[submodule "forms/private-company-registration"]
+	path = forms/private-company-registration
+	url = https://github.com/dirkdebeer1-hub/private-company-registration.git
